@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>A Night to Remember</title>
+  <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cinzel:wght@300;400;600&family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css" />
+
+</head>
+<body>
+
+  <!-- GIFT BOX INTRO SCREEN -->
+  <div id="gift-intro-screen">
+    <!-- Floating sparkles background -->
+    <div class="gift-bg-stars" id="gift-bg-stars"></div>
+
+    <div id="gift-wrapper">
+      <div id="gift-container" onclick="openGift()" role="button" aria-label="Tap to open gift">
+        <!-- Gift Box -->
+        <div id="gift-box">
+          <div class="gift-lid">
+            <div class="ribbon-h"></div>
+            <div class="ribbon-v"></div>
+            <div class="bow">
+              <div class="bow-left"></div>
+              <div class="bow-right"></div>
+              <div class="bow-center"></div>
+            </div>
+          </div>
+          <div class="gift-body">
+            <div class="ribbon-body-h"></div>
+            <div class="ribbon-body-v"></div>
+          </div>
+        </div>
+        <p class="gift-hint">✨ tap to open ✨</p>
+      </div>
+
+      <!-- Bloom burst particles container -->
+      <div id="bloom-container"></div>
+    </div>
+
+    <!-- Fade overlay for transition -->
+    <div id="gift-fade-overlay"></div>
+  </div>
+
+  <!-- LOADING OVERLAY -->
+  <div id="loading-overlay">
+    <p class="loading-monogram">D</p>
+    <div class="loading-bar-track">
+      <div id="loading-bar-fill"></div>
+    </div>
+    <div class="loading-meta">
+      <span id="loading-percentage">0%</span>
+      <span id="loading-label">Preparing your evening...</span>
+    </div>
+  </div>
+
+  <!-- Progress Bar -->
+  <div id="progress-bar">
+    <div id="progress-fill"></div>
+  </div>
+
+  <!-- Scene Dots -->
+  <nav id="scene-dots">
+    <button class="dot active" data-scene="0"></button>
+    <button class="dot" data-scene="1"></button>
+    <button class="dot" data-scene="2"></button>
+    <button class="dot" data-scene="3"></button>
+    <button class="dot" data-scene="4"></button>
+    <button class="dot" data-scene="5"></button>
+  </nav>
+
+  <!-- SCENE 0 - INTRO -->
+  <section class="scene active" id="scene-0">
+    <div class="scene-inner">
+      <p class="intro-eyebrow">You are cordially invited</p>
+      <h1 class="intro-title">
+        <span class="intro-line-1">A Little Surprise</span><br>
+        <em class="intro-line-2">Made With Love</em>
+      </h1>
+      <div class="intro-rule">
+        <span class="rule-dash"></span>
+        <span class="rule-gem">◆</span>
+        <span class="rule-dash"></span>
+      </div>
+      <p class="intro-begin">Tap anywhere to begin</p>
+    </div>
+  </section>
+
+  <!-- SCENE 1 - COUNTDOWN -->
+  <section class="scene" id="scene-1">
+    <div class="countdown-wrap">
+      <svg class="countdown-ring-svg" viewBox="0 0 120 120">
+        <circle class="ring-track" cx="60" cy="60" r="54"/>
+        <circle class="ring-progress" cx="60" cy="60" r="54" id="ring-progress-el"/>
+      </svg>
+      <div class="countdown-num" id="countdown-num">3</div>
+    </div>
+    <p class="countdown-label">preparing something for you...</p>
+  </section>
+
+  <!-- SCENE 2 - HERO -->
+  <section class="scene" id="scene-2">
+    <div class="scene-inner hero-inner">
+      <p class="hero-pre">Celebrating</p>
+      <h2 class="hero-name">Dita Afifah<br>Rafatinia</h2>
+      <div class="hero-rule">
+        <span class="rule-dash"></span>
+        <span class="rule-gem">◆</span>
+        <span class="rule-dash"></span>
+      </div>
+      <p class="hero-tagline">Everything about you matters &nbsp;·&nbsp; This is for you</p>
+      <button class="hero-cta" id="hero-cta">
+        <span class="cta-text">Let It Begin</span>
+        <span class="cta-arrow">↓</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- SCENE 3 - PHOTO GRID -->
+  <section class="scene" id="scene-3">
+    <div class="photogrid-wrap">
+      <div class="photogrid-header">
+        <p class="photogrid-eyebrow">All About You</p>
+        <div class="intro-rule">
+          <span class="rule-dash"></span>
+          <span class="rule-gem">◆</span>
+          <span class="rule-dash"></span>
+        </div>
+      </div>
+
+      <div class="photo-grid" id="photo-grid">
+        <div class="photo-frame">
+          <div class="photo-frame-inner">
+            <img src="assets/images/foto (1).jpeg" alt="Memory 1" />
+            <div class="photo-caption">You</div>
+          </div>
+        </div>
+        <div class="photo-frame">
+          <div class="photo-frame-inner">
+            <img src="assets/images/foto (2).jpeg" alt="Memory 2" />
+            <div class="photo-caption">Are</div>
+          </div>
+        </div>
+        <div class="photo-frame">
+          <div class="photo-frame-inner">
+            <img src="assets/images/foto (3).jpeg" alt="Memory 3" />
+            <div class="photo-caption">So</div>
+          </div>
+        </div>
+        <div class="photo-frame">
+          <div class="photo-frame-inner">
+            <img src="assets/images/foto (4).jpeg" alt="Memory 4" />
+            <div class="photo-caption">Beautiful</div>
+          </div>
+        </div>
+      </div>
+
+      <button class="scene-continue-fixed" id="photogrid-next">
+        <span>Continue</span>
+        <span class="continue-arrow">→</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- SCENE 4 - MESSAGE SLIDER -->
+  <section class="scene" id="scene-4">
+    <div class="msgslider-wrap">
+      <p class="msgslider-eyebrow">A Message Just for You</p>
+
+      <div class="msgslider-viewport">
+        <div class="msgslider-track" id="msgslider-track">
+          <!-- Slide 1 -->
+          <div class="msg-slide active">
+            <div class="msg-slide-img-wrap">
+              <img src="assets/images/foto (5).jpeg" alt="A special moment" />
+            </div>
+            <div class="msg-slide-content">
+              <p class="msg-slide-num">01</p>
+              <p class="msg-slide-text">Di antara semua hal yang terjadi dalam hidupku, kamu adalah bagian yang paling ingin selalu aku jaga. Terima kasih sudah ada, dengan caramu yang sederhana tapi berarti.</p>
+            </div>
+          </div>
+          <!-- Slide 2 -->
+          <div class="msg-slide">
+            <div class="msg-slide-img-wrap">
+              <img src="assets/images/foto (6).jpeg" alt="Memories together" />
+            </div>
+            <div class="msg-slide-content">
+              <p class="msg-slide-num">02</p>
+              <p class="msg-slide-text">Melihat senyummu adalah salah satu bagian terfavorit di hariku. Jangan pernah hilang senyum manisnya ya.</p>
+            </div>
+          </div>
+          <!-- Slide 3 -->
+          <div class="msg-slide">
+            <div class="msg-slide-img-wrap">
+              <img src="assets/images/foto (7).jpeg" alt="Golden times" />
+            </div>
+            <div class="msg-slide-content">
+              <p class="msg-slide-num">03</p>
+              <p class="msg-slide-text">Semoga ulang tahun ini memunculkan keberkahan, melancarkan rezeki, dan keleluasan hati</p>
+            </div>
+          </div>
+          <!-- Slide 4 -->
+          <div class="msg-slide">
+            <div class="msg-slide-img-wrap">
+              <img src="assets/images/foto (8).jpeg" alt="Golden times" />
+            </div>
+            <div class="msg-slide-content">
+              <p class="msg-slide-num">04</p>
+              <p class="msg-slide-text">Setiap memori yang kita buat bersama adalah harta karun buatku. Mari buat lebih banyak memori indah di tahun-tahun berikutnya. Selamat Ulang Tahun sayang.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="msgslider-nav">
+        <button class="msgslider-prev" id="msgslider-prev">←</button>
+        <div class="msgslider-pips" id="msgslider-pips">
+          <span class="msgslider-pip active"></span>
+          <span class="msgslider-pip"></span>
+          <span class="msgslider-pip"></span>
+          <span class="msgslider-pip"></span>
+        </div>
+        <button class="msgslider-next" id="msgslider-next">→</button>
+      </div>
+
+      <button class="scene-continue-fixed" id="scene4-continue">
+        <span>Continue</span>
+        <span class="continue-arrow">→</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- SCENE 5 - FINAL -->
+  <section class="scene" id="scene-5">
+    <canvas id="fireworks-canvas"></canvas>
+    <div class="scene-inner final-inner">
+      <p class="final-pre">Thank you for being here</p>
+      <h2 class="final-title">Happy Birthday</h2>
+      
+      <div class="cake-container">
+        <!-- Sparkles -->
+        <div class="cake-sparkle sp-1"></div>
+        <div class="cake-sparkle sp-2"></div>
+        <div class="cake-sparkle sp-3"></div>
+        <div class="cake-sparkle sp-4"></div>
+
+        <!-- Top Tier -->
+        <div class="cake-tier tier-top">
+          <!-- Candle on top -->
+          <div class="candle-wrap">
+            <div class="candle-flame"></div>
+            <div class="candle-wick"></div>
+            <div class="candle-body"></div>
+          </div>
+          <div class="frosting-drips"></div>
+          <div class="pearls">
+            <span class="pearl"></span>
+            <span class="pearl"></span>
+            <span class="pearl"></span>
+            <span class="pearl"></span>
+            <span class="pearl"></span>
+          </div>
+        </div>
+
+        <!-- Middle Tier -->
+        <div class="cake-tier tier-middle">
+          <div class="frosting-drips"></div>
+          <div class="pearls">
+            <span class="pearl"></span>
+            <span class="pearl"></span>
+            <span class="pearl"></span>
+            <span class="pearl"></span>
+            <span class="pearl"></span>
+            <span class="pearl"></span>
+            <span class="pearl"></span>
+          </div>
+        </div>
+
+        <!-- Bottom Tier -->
+        <div class="cake-tier tier-bottom">
+          <div class="frosting-drips"></div>
+          <div class="pearls">
+            <span class="pearl"></span>
+            <span class="pearl"></span>
+            <span class="pearl"></span>
+            <span class="pearl"></span>
+            <span class="pearl"></span>
+            <span class="pearl"></span>
+            <span class="pearl"></span>
+            <span class="pearl"></span>
+            <span class="pearl"></span>
+          </div>
+        </div>
+
+        <!-- Stand -->
+        <div class="cake-stand"></div>
+      </div>
+
+      <p class="final-tagline">you deserve all the good things in life.</p>
+      <button class="replay-btn" id="replay-btn">
+        <span class="replay-icon">↺</span>
+        <span>Replay the night</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- GSAP Animation Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  
+  <!-- Audio System -->
+  <script src="js/audio-system.js"></script>
+
+  <!-- Main Script -->
+  <script src="js/app.js"></script>
+
+</body>
+</html>

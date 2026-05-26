@@ -1,0 +1,1090 @@
+/* ==========================================================================
+   CSS Variables & Reset
+   ========================================================================== */
+:root {
+  --color-bg: #04030a;
+  --color-gold: #d4af6e;
+  --color-gold-dim: rgba(212, 175, 110, 0.4);
+  --color-text: #f5ede0;
+  --color-text-dim: rgba(245, 237, 224, 0.6);
+  
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-display: 'Cinzel', serif;
+  --font-body: 'EB Garamond', serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  overflow: hidden; /* Prevent scrolling during scenes */
+  width: 100vw;
+  height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+}
+
+/* ==========================================================================
+   Loading Overlay
+   ========================================================================== */
+#loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.6rem;
+  transition: opacity 0.8s ease;
+}
+
+#loading-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading-monogram {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  color: var(--color-gold);
+  animation: pulse 2s infinite ease-in-out;
+}
+
+.loading-bar-track {
+  width: 200px;
+  height: 1px;
+  background: var(--color-gold-dim);
+  position: relative;
+}
+
+#loading-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--color-gold);
+  transition: width 0.3s ease;
+}
+
+.loading-meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: var(--color-text-dim);
+  letter-spacing: 0.1em;
+}
+
+/* ==========================================================================
+   Navigation (Scene Dots)
+   ========================================================================== */
+#scene-dots {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 100;
+  opacity: 0; /* Hidden initially, shown after load */
+  pointer-events: none;
+}
+
+#scene-dots.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-text-dim);
+  transition: all 0.3s ease;
+}
+
+.dot.active {
+  background: var(--color-gold);
+  transform: scale(1.5);
+}
+
+/* ==========================================================================
+   Scene Base Styles
+   ========================================================================== */
+.scene {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity 0.8s ease, visibility 0.8s;
+}
+
+.scene.active {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.scene-inner {
+  text-align: center;
+  padding: 2rem;
+  max-width: 800px;
+}
+
+.intro-rule, .hero-rule {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  color: var(--color-gold);
+}
+
+.rule-dash {
+  width: 40px;
+  height: 1px;
+  background: var(--color-gold-dim);
+}
+
+.rule-gem {
+  font-size: 0.5rem;
+}
+
+/* ==========================================================================
+   Scene 0: Intro
+   ========================================================================== */
+.intro-eyebrow {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  letter-spacing: 0.3em;
+  color: var(--color-gold);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.intro-title {
+  font-family: var(--font-serif);
+  font-size: clamp(3rem, 8vw, 5rem);
+  line-height: 1.1;
+  font-weight: 300;
+}
+
+.intro-line-2 {
+  font-style: italic;
+  color: var(--color-gold);
+  font-size: 0.8em;
+}
+
+.intro-begin {
+  font-size: 0.9rem;
+  letter-spacing: 0.2em;
+  color: var(--color-text-dim);
+  text-transform: uppercase;
+  animation: pulse 2s infinite ease-in-out;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   Scene 1: Countdown
+   ========================================================================== */
+.countdown-wrap {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 2rem;
+}
+
+.countdown-ring-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.ring-track {
+  fill: none;
+  stroke: var(--color-gold-dim);
+  stroke-width: 2;
+}
+
+.ring-progress {
+  fill: none;
+  stroke: var(--color-gold);
+  stroke-width: 3;
+  stroke-dasharray: 339.292; /* 2 * pi * r (54) */
+  stroke-dashoffset: 0;
+}
+
+.countdown-num {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 3rem;
+  color: var(--color-gold);
+}
+
+.countdown-label {
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--color-text-dim);
+  text-align: center;
+}
+
+/* ==========================================================================
+   Scene 2: Hero
+   ========================================================================== */
+.hero-pre {
+  font-family: var(--font-display);
+  letter-spacing: 0.3em;
+  color: var(--color-gold);
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.hero-name {
+  font-family: var(--font-serif);
+  font-size: clamp(4rem, 12vw, 7rem);
+  font-weight: 300;
+  line-height: 1;
+}
+
+.hero-tagline {
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--color-text-dim);
+  margin-bottom: 3rem;
+}
+
+.hero-cta {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.8rem;
+  color: var(--color-gold);
+  transition: transform 0.3s ease;
+}
+
+.hero-cta:hover {
+  transform: translateY(5px);
+}
+
+/* ==========================================================================
+   Scene 3: Photo Grid
+   ========================================================================== */
+.photogrid-wrap {
+  width: 100%;
+  height: 100%;
+  padding: 4rem 2rem 8rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.photogrid-wrap::-webkit-scrollbar {
+  width: 6px;
+}
+.photogrid-wrap::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+.photogrid-wrap::-webkit-scrollbar-thumb {
+  background: var(--color-gold-dim);
+  border-radius: 4px;
+}
+
+.photogrid-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.photogrid-eyebrow {
+  font-family: var(--font-display);
+  letter-spacing: 0.3em;
+  color: var(--color-gold);
+  text-transform: uppercase;
+  font-size: 1.2rem;
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  max-width: 800px;
+  width: 100%;
+  perspective: 1000px;
+}
+
+.photo-frame {
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  background: #111;
+  aspect-ratio: 4/5;
+}
+
+.photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.7;
+  transition: opacity 0.5s, transform 5s ease-out;
+}
+
+.photo-frame:hover img {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.photo-caption {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-style: italic;
+  color: var(--color-gold);
+  text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+}
+
+.scene-continue-fixed {
+  position: fixed;
+  bottom: 30px;
+  right: 40px;
+  z-index: 50;
+  color: var(--color-gold);
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   Scene 4: Message Slider
+   ========================================================================== */
+.msgslider-wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.msgslider-eyebrow {
+  font-family: var(--font-display);
+  letter-spacing: 0.2em;
+  color: var(--color-gold);
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+.msgslider-viewport {
+  width: 100%;
+  max-width: 900px;
+  overflow: hidden;
+  position: relative;
+}
+
+.msgslider-track {
+  display: flex;
+  transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.msg-slide {
+  min-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.8s, transform 0.8s;
+}
+
+@media (min-width: 768px) {
+  .msg-slide {
+    flex-direction: row;
+  }
+}
+
+.msg-slide.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.msg-slide-img-wrap {
+  flex: 1;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.msg-slide-img-wrap img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.msg-slide-content {
+  flex: 1;
+  text-align: left;
+}
+
+.msg-slide-num {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  color: var(--color-gold-dim);
+  margin-bottom: 1rem;
+}
+
+.msg-slide-text {
+  font-size: 1.4rem;
+  line-height: 1.6;
+  color: var(--color-text);
+}
+
+.msgslider-nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 3rem;
+  color: var(--color-gold);
+}
+
+.msgslider-pips {
+  display: flex;
+  gap: 10px;
+}
+
+.msgslider-pip {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-gold-dim);
+}
+
+.msgslider-pip.active {
+  background: var(--color-gold);
+  transform: scale(1.5);
+}
+
+/* ==========================================================================
+   Scene 5: Final
+   ========================================================================== */
+#fireworks-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.final-inner {
+  position: relative;
+  z-index: 2;
+}
+
+.final-pre {
+  font-family: var(--font-display);
+  letter-spacing: 0.3em;
+  color: var(--color-gold);
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.final-title {
+  font-family: var(--font-serif);
+  font-size: clamp(3rem, 10vw, 6rem);
+  font-weight: 300;
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+
+/* ==========================================================================
+   CSS Birthday Cake (Scene 5)
+   ========================================================================== */
+.cake-container {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  margin: 1.5rem auto 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  animation: cake-float 6s ease-in-out infinite;
+}
+
+/* Glowing aura behind the cake */
+.cake-container::before {
+  content: '';
+  position: absolute;
+  inset: -15px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 175, 110, 0.45) 0%, rgba(212, 175, 110, 0.08) 55%, transparent 80%);
+  z-index: 1;
+  filter: blur(15px);
+  animation: cake-glow 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Base Plate / Stand */
+.cake-stand {
+  width: 200px;
+  height: 14px;
+  background: linear-gradient(90deg, #aa7c11 0%, #f1d386 50%, #aa7c11 100%);
+  border-radius: 50% / 100% 100% 0 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+  z-index: 2;
+  position: relative;
+}
+
+.cake-stand::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 20px;
+  width: 160px;
+  height: 8px;
+  background: linear-gradient(90deg, #5c4308 0%, #aa7c11 50%, #5c4308 100%);
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+}
+
+/* Cake Tier Base class */
+.cake-tier {
+  position: relative;
+  border-radius: 10px 10px 4px 4px;
+  background: linear-gradient(90deg, #1f0b18 0%, #3d142b 50%, #1f0b18 100%);
+  border: 1px solid rgba(212, 175, 110, 0.2);
+  border-bottom: none;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+/* 3D Top Ellipse for each tier */
+.cake-tier::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: -1px;
+  right: -1px;
+  height: 16px;
+  border-radius: 50%;
+  background: inherit;
+  border: 1px solid rgba(212, 175, 110, 0.2);
+  z-index: 3;
+}
+
+/* Bottom Tier */
+.tier-bottom {
+  width: 170px;
+  height: 60px;
+  z-index: 3;
+}
+
+/* Middle Tier */
+.tier-middle {
+  width: 130px;
+  height: 50px;
+  z-index: 4;
+  margin-bottom: -4px; /* overlap slightly */
+}
+
+/* Top Tier */
+.tier-top {
+  width: 90px;
+  height: 40px;
+  z-index: 5;
+  margin-bottom: -4px;
+}
+
+/* Frosting drips */
+.frosting-drips {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 15px;
+  background: linear-gradient(90deg, #aa7c11 0%, #f1d386 50%, #aa7c11 100%);
+  border-radius: 0 0 4px 4px;
+  z-index: 4;
+  overflow: visible;
+  border-top: 1px solid rgba(255,255,255,0.2);
+}
+
+/* CSS frosting drip bubbles */
+.frosting-drips::after {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background-image: radial-gradient(circle at 10px 0, #f1d386 8px, transparent 9px),
+                    radial-gradient(circle at 35px 0, #aa7c11 6px, transparent 7px),
+                    radial-gradient(circle at 60px 0, #f1d386 8px, transparent 9px),
+                    radial-gradient(circle at 85px 0, #aa7c11 5px, transparent 6px),
+                    radial-gradient(circle at 110px 0, #f1d386 8px, transparent 9px),
+                    radial-gradient(circle at 135px 0, #aa7c11 7px, transparent 8px),
+                    radial-gradient(circle at 160px 0, #f1d386 6px, transparent 7px);
+  background-size: 100% 100%;
+}
+
+.tier-middle .frosting-drips::after {
+  background-image: radial-gradient(circle at 8px 0, #f1d386 6px, transparent 7px),
+                    radial-gradient(circle at 28px 0, #aa7c11 8px, transparent 9px),
+                    radial-gradient(circle at 48px 0, #f1d386 5px, transparent 6px),
+                    radial-gradient(circle at 68px 0, #aa7c11 7px, transparent 8px),
+                    radial-gradient(circle at 88px 0, #f1d386 6px, transparent 7px),
+                    radial-gradient(circle at 108px 0, #aa7c11 8px, transparent 9px),
+                    radial-gradient(circle at 128px 0, #f1d386 5px, transparent 6px);
+}
+
+.tier-top .frosting-drips::after {
+  background-image: radial-gradient(circle at 6px 0, #f1d386 6px, transparent 7px),
+                    radial-gradient(circle at 21px 0, #aa7c11 5px, transparent 6px),
+                    radial-gradient(circle at 36px 0, #f1d386 7px, transparent 8px),
+                    radial-gradient(circle at 51px 0, #aa7c11 5px, transparent 6px),
+                    radial-gradient(circle at 66px 0, #f1d386 6px, transparent 7px),
+                    radial-gradient(circle at 81px 0, #aa7c11 5px, transparent 6px);
+}
+
+/* Cream Pearls / sprinkles */
+.pearls {
+  position: absolute;
+  top: -3px;
+  width: 100%;
+  height: 6px;
+  z-index: 5;
+  display: flex;
+  justify-content: space-around;
+}
+.pearl {
+  width: 6px;
+  height: 6px;
+  background: radial-gradient(circle at 2px 2px, #fff 0%, #e6ca65 80%, #b8860b 100%);
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+/* Candles */
+.candle-wrap {
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  width: 10px;
+  height: 40px;
+}
+
+.candle-body {
+  width: 8px;
+  height: 35px;
+  background: repeating-linear-gradient(45deg, #f1d386, #f1d386 4px, #fff 4px, #fff 8px);
+  border-radius: 3px 3px 0 0;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  position: absolute;
+  bottom: 0;
+  left: 1px;
+}
+
+.candle-wick {
+  width: 2px;
+  height: 6px;
+  background: #111;
+  position: absolute;
+  top: -6px;
+  left: 4px;
+}
+
+.candle-flame {
+  position: absolute;
+  top: -24px;
+  left: 0px;
+  width: 10px;
+  height: 20px;
+  background: radial-gradient(ellipse at bottom, #ffea4a 0%, #ff7300 50%, rgba(255,0,0,0) 90%);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  box-shadow: 0 0 20px #ffea4a, 0 0 40px #ff7300;
+  transform-origin: bottom center;
+  animation: flame-flicker 1.8s ease-in-out infinite alternate;
+}
+
+/* Sparkles around cake */
+.cake-sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  clip-path: polygon(50% 0%, 65% 35%, 100% 50%, 65% 65%, 50% 100%, 35% 65%, 0% 50%, 35% 35%);
+  box-shadow: 0 0 10px #ffea4a;
+  animation: sparkle-glow 3s infinite ease-in-out;
+  z-index: 10;
+}
+.sp-1 { top: 20px; left: 10px; animation-delay: 0.2s; }
+.sp-2 { top: 70px; right: 15px; animation-delay: 1.1s; }
+.sp-3 { top: 120px; left: -10px; animation-delay: 0.7s; }
+.sp-4 { top: 40px; right: -5px; animation-delay: 2.2s; }
+
+/* Animations */
+@keyframes flame-flicker {
+  0% { transform: scale(1) rotate(-1deg); }
+  20% { transform: scale(1.1) rotate(1deg) skewX(-2deg); }
+  40% { transform: scale(0.95) rotate(-1deg) skewX(2deg); }
+  60% { transform: scale(1.05) rotate(2deg) skewX(-1deg); }
+  80% { transform: scale(1) rotate(-2deg); }
+  100% { transform: scale(1.1) rotate(1deg); }
+}
+
+@keyframes sparkle-glow {
+  0%, 100% { opacity: 0; transform: scale(0); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+@keyframes cake-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes cake-glow {
+  0%, 100% { opacity: 0.5; transform: scale(0.95); }
+  50% { opacity: 0.85; transform: scale(1.08); }
+}
+
+.final-tagline {
+  font-style: italic;
+  font-size: 1.5rem;
+  color: var(--color-text-dim);
+  margin-bottom: 3rem;
+}
+
+.replay-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.8rem;
+  color: var(--color-text-dim);
+  transition: color 0.3s;
+}
+
+.replay-btn:hover {
+  color: var(--color-gold);
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.8; }
+}
+
+/* ==========================================================================
+   Gift Box Intro Screen
+   ========================================================================== */
+#gift-intro-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: radial-gradient(ellipse at center, #3d0a1f 0%, #1a0510 40%, #0d0208 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease;
+}
+
+#gift-intro-screen.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Starfield background */
+.gift-bg-stars {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.gift-star {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 220, 180, 0.7);
+  animation: gift-star-twinkle var(--dur, 3s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes gift-star-twinkle {
+  0%, 100% { opacity: 0.15; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.3); }
+}
+
+/* Wrapper & Container */
+#gift-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#gift-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  animation: gift-float 3s ease-in-out infinite;
+}
+
+@keyframes gift-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+/* === Gift Box === */
+#gift-box {
+  position: relative;
+  width: 140px;
+  height: 130px;
+  filter: drop-shadow(0 0 30px rgba(220, 80, 100, 0.6)) drop-shadow(0 20px 40px rgba(0,0,0,0.5));
+  transition: transform 0.3s ease;
+}
+
+#gift-container:hover #gift-box {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 45px rgba(220, 80, 100, 0.85)) drop-shadow(0 20px 40px rgba(0,0,0,0.5));
+}
+
+/* Gift Lid */
+.gift-lid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 44px;
+  background: linear-gradient(135deg, #e85070 0%, #c8304a 50%, #a82038 100%);
+  border-radius: 6px 6px 0 0;
+  transform-origin: top center;
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#gift-box.opened .gift-lid {
+  transform: rotateX(-120deg) translateY(-30px);
+}
+
+/* Lid ribbons */
+.ribbon-h {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 12px;
+  margin-top: -6px;
+  background: linear-gradient(to bottom, #f5c842, #e8a820, #f5c842);
+  border-radius: 2px;
+}
+
+.ribbon-v {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 12px;
+  margin-left: -6px;
+  background: linear-gradient(to right, #f5c842, #e8a820, #f5c842);
+  border-radius: 2px;
+}
+
+/* Bow */
+.bow {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 36px;
+}
+
+.bow-left, .bow-right {
+  position: absolute;
+  top: 0;
+  width: 26px;
+  height: 26px;
+  background: linear-gradient(135deg, #f5d050, #e8a820);
+  border-radius: 50% 0 50% 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.bow-left {
+  left: 2px;
+  transform: rotate(-30deg);
+}
+
+.bow-right {
+  right: 2px;
+  transform: rotate(30deg) scaleX(-1);
+}
+
+.bow-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 14px;
+  background: radial-gradient(circle, #f9e070, #e8a820);
+  border-radius: 50%;
+  z-index: 2;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+/* Gift Body */
+.gift-body {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 40px;
+  background: linear-gradient(135deg, #d64060 0%, #b82840 50%, #982030 100%);
+  border-radius: 0 0 8px 8px;
+  overflow: hidden;
+}
+
+.ribbon-body-h {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 14px;
+  margin-top: -7px;
+  background: linear-gradient(to bottom, #f5c842, #e8a820, #f5c842);
+}
+
+.ribbon-body-v {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 14px;
+  margin-left: -7px;
+  background: linear-gradient(to right, #f5c842, #e8a820, #f5c842);
+}
+
+/* Gift hint text */
+.gift-hint {
+  margin-top: 28px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  letter-spacing: 0.25em;
+  color: rgba(245, 220, 180, 0.75);
+  animation: pulse 2.5s ease-in-out infinite;
+  text-shadow: 0 0 20px rgba(245, 200, 100, 0.5);
+}
+
+/* === Bloom Burst Particles === */
+#bloom-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}
+
+.bloom-particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+}
+
+/* === Shockwave ring === */
+.shockwave-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid rgba(245, 200, 100, 0.8);
+  transform: translate(-50%, -50%) scale(0);
+  pointer-events: none;
+  animation: shockwave 0.8s ease-out forwards;
+}
+
+@keyframes shockwave {
+  0%   { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(30); opacity: 0; }
+}
+
+/* === Gift fade overlay === */
+#gift-fade-overlay {
+  position: absolute;
+  inset: 0;
+  background: #04030a;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+}
+
+#gift-fade-overlay.active {
+  opacity: 1;
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  #gift-box {
+    width: 120px;
+    height: 110px;
+  }
+  .bow {
+    width: 50px;
+    height: 30px;
+    top: -15px;
+  }
+}
